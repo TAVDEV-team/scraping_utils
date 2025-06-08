@@ -9,6 +9,9 @@ from bs4 import BeautifulSoup, FeatureNotFound
 from selenium.common.exceptions import WebDriverException, TimeoutException
 
 from requests.exceptions import RequestException, Timeout, ConnectionError
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+from gspread_dataframe import set_with_dataframe
 
 from logger import get_logger
 logger = get_logger('utils.common','imdb')
@@ -315,3 +318,20 @@ def post_with_retry(
 
     logger.error("❌ All retry attempts for API POST failed.")
     return False
+
+def push_dataframe_to_google_sheet(df, sheet_name, creds_file="creds.json", spreadsheet_name="Top250Movies-updated"):
+
+
+    scope = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
+    creds = ServiceAccountCredentials.from_json_keyfile_name(creds_file, scope)
+    client = gspread.authorize(creds)
+
+    spreadsheet = client.open(spreadsheet_name)
+    try:
+        sheet = spreadsheet.worksheet(sheet_name)
+    except gspread.WorksheetNotFound:
+        sheet = spreadsheet.add_worksheet(title=sheet_name, rows="300", cols="20")
+
+    sheet.clear()
+    set_with_dataframe(sheet, df)
+    print(f"✅ Pushed to {sheet_name}")
