@@ -1,0 +1,57 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+*.pyd
+
+# === Virtual Envs ===
+venv/
+.env/
+.envrc
+*.env
+
+# === PyInstaller ===
+*.spec
+dist/
+build/
+
+# === Jupyter ===
+.ipynb_checkpoints
+
+# === Logs ===
+*.log
+logs/
+
+# === Testing ===
+.coverage
+htmlcov/
+.tox/
+.cache/
+pytest_cache/
+.noseids
+
+# === VS Code ===
+.vscode/
+
+# === OS ===
+.DS_Store
+Thumbs.db
+
+# === Git ===
+*.swp
+*.swo
+
+# === MyPy / Type Checking ===
+.mypy_cache/
+.dmypy.json
+.pyre/
+
+# === Pylint ===
+pylint-report.txt
+
+# === Coverage ===
+.coverage
+coverage.xml
+*.cover
+.hypothesis/
